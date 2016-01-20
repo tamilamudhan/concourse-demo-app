@@ -4,7 +4,7 @@ platform: linux
 image: docker:///golang#1.4.2-wheezy
 
 inputs:
-- name: demp-app
+- name: demo-app
   path: go/src/github.com/xchapter7x/concourse-demo-app
 
 run:
