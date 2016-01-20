@@ -1,0 +1,77 @@
+groups: []
+
+resources:
+- name: demo-app-master
+  type: git
+  source:
+    branch: master
+    private_key: {{github-private-key}}
+    uri: git@github.com:xchapter7x/concourse-demo-app.git
+- name: demo-app-release
+  type: git
+  source:
+    branch: master
+    private_key: {{github-private-key}}
+    uri: git@github.com:xchapter7x/concourse-demo-app.git
+    paths:
+      - demo-app-master/VERSION
+- name: staging
+  type: cf
+  source:
+    api: https://api.run.pez.pivotal.io
+    organization: pivot-jcalabrese
+    username: {{deploy-username}}
+    password: {{deploy-password}}
+    skip_cert_check: false
+    space: demo-staging
+- name: production
+  type: cf
+  source:
+    api: https://api.run.pez.pivotal.io
+    organization: pivot-jcalabrese
+    username: {{deploy-username}}
+    password: {{deploy-password}}
+    skip_cert_check: false
+    space: demo-production
+
+jobs:
+- name: unit
+  serial: true
+  public: true
+  plan:
+  - get: demo-app-master 
+    trigger: true
+  - task: unit
+    file: demo-app-master/ci/unit.yml
+- name: deploy
+  serial: true
+  plan:
+  - get: demo-app-master
+    trigger: true
+    passed:
+      - unit
+  - put: staging
+    params:
+      manifest: demo-app-master/manifests/staging.yml
+      path: demo-app-master
+      current_app_name: demo-app-dev
+- name: tagit
+  public: true
+  plan:
+  - get: demo-app-release
+    trigger: true
+  - put: demo-app-master
+    params:
+      tag: demo-app-release/VERSION
+      tag_prefix: v
+      repository: demo-app-release
+- name: shipit
+  plan:
+  - get: demo-app-master
+    passed:
+      - tagit
+  - put: production
+    params:
+      manifest: demo-app-master/manifests/prod.yml
+      path: demo-app-master
+      current_app_name: demo-app
