@@ -9,5 +9,6 @@ go get github.com/tools/godep
 source_dir="$(cd "$(dirname "$0")" && pwd)"
 cd $source_dir/..
 godep go build .
+mkdir build-artifact
 mv concourse-demo-app build-artifact
 ls -lha build-artifact

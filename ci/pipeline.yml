@@ -60,6 +60,10 @@ jobs:
     trigger: true
     passed:
       - compile
+  - get: build-artifact 
+    trigger: true
+    passed:
+      - compile
   - put: staging
     params:
       manifest: concourse-demo-app-master/manifests/staging.yml
