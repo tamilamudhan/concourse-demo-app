@@ -3,4 +3,4 @@ concourse-demo-app
 id_rsa
 id_rsa.pub
 fly
-concourse-demo-app
+!cmd/concourse-demo-app
