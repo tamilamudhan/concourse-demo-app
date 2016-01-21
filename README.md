@@ -9,6 +9,13 @@
   $ vagrant init concourse/lite; vagrant up --provider virtualbox
   ```
 
+- **setup fly cli**
+  
+  ```
+  $ curl -L "http://192.168.100.4:8080/api/v1/cli?arch=amd64&platform=darwin"
+  $ ./fly sync
+  ```
+  
 - **get demo app**
 
   ```
