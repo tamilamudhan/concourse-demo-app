@@ -51,7 +51,7 @@ jobs:
     trigger: true
     passed:
       - unit
-  - task: compile
+  - task: compile-smoke
     file: concourse-demo-app-master/ci/compile.yml
 - name: deploy
   serial: true
@@ -59,11 +59,7 @@ jobs:
   - get: concourse-demo-app-master
     trigger: true
     passed:
-      - compile
-  - get: build-artifact 
-    trigger: true
-    passed:
-      - compile
+      - compile-smoke
   - put: staging
     params:
       manifest: concourse-demo-app-master/manifests/staging.yml
