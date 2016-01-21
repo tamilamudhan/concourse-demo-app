@@ -7,5 +7,9 @@ inputs:
 - name: concourse-demo-app-master
   path: go/src/github.com/xchapter7x/concourse-demo-app
 
+outputs:
+- name: build-artifact
+  path: go/src/github.com/xchapter7x/concourse-demo-app/build-artifact
+
 run:
   path: go/src/github.com/xchapter7x/concourse-demo-app/ci/run-compile
