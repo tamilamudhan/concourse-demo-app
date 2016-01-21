@@ -7,14 +7,6 @@ resources:
     branch: master
     private_key: {{github-private-key}}
     uri: git@github.com:xchapter7x/concourse-demo-app.git
-- name: concourse-demo-app-release
-  type: git
-  source:
-    branch: master
-    private_key: {{github-private-key}}
-    uri: git@github.com:xchapter7x/concourse-demo-app.git
-    paths:
-      - concourse-demo-app-master/VERSION
 - name: staging
   type: cf
   source:
@@ -53,7 +45,7 @@ jobs:
       - unit-tests
   - task: compile-smoke
     file: concourse-demo-app-master/ci/compile.yml
-- name: deploy
+- name: deploy-stage
   serial: true
   plan:
   - get: concourse-demo-app-master
@@ -65,21 +57,24 @@ jobs:
       manifest: concourse-demo-app-master/manifests/staging.yml
       path: concourse-demo-app-master
       current_app_name: demo-app-stage
-- name: tagit
+- name: load-test 
   public: true
   plan:
-  - get: concourse-demo-app-release
+  - get: concourse-demo-app-master
     trigger: true
-  - put: concourse-demo-app-master
-    params:
-      tag: concourse-demo-app-release/VERSION
-      tag_prefix: v
-      repository: concourse-demo-app-release
+    passed:
+      - deploy-stage
+  - task: load-test 
+    file: concourse-demo-app-master/ci/load.yml
+    config:
+      params: 
+        "CFUSER": {{deploy-username}}
+        "CFPASS": {{deploy-password}}
 - name: shipit
   plan:
   - get: concourse-demo-app-master
     passed:
-      - tagit
+      - load-test
   - put: production
     params:
       manifest: concourse-demo-app-master/manifests/prod.yml
