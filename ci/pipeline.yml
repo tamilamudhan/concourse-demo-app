@@ -4,9 +4,9 @@ groups:
   - unit-tests
   - compile-smoke
   - deploy-stage
+  - load-test
 - name: deployment
   jobs:
-  - load-test
   - shipit
 
 resources:
