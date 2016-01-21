@@ -20,7 +20,7 @@ var _ = Describe("main", func() {
 				responseWriter = httptest.NewRecorder()
 				IndexController(responseWriter, request)
 			})
-			It("then it should return a nice welcome message", func() {
+			It("then it should return a nice welcome message asldkjfasdf", func() {
 				body, _ := ioutil.ReadAll(responseWriter.Body)
 				Ω(string(body)).Should(Equal(WelcomeMessage))
 			})
