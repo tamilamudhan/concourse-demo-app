@@ -64,7 +64,7 @@ jobs:
     params:
       manifest: concourse-demo-app-master/manifests/staging.yml
       path: concourse-demo-app-master
-      current_app_name: demo-app-dev
+      current_app_name: demo-app-stage
 - name: tagit
   public: true
   plan:
@@ -84,4 +84,4 @@ jobs:
     params:
       manifest: concourse-demo-app-master/manifests/prod.yml
       path: concourse-demo-app-master
-      current_app_name: demo-app
+      current_app_name: demo-app-prod
