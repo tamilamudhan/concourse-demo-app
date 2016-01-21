@@ -43,13 +43,23 @@ jobs:
     trigger: true
   - task: unit
     file: concourse-demo-app-master/ci/unit.yml
+- name: compile 
+  serial: true
+  public: true
+  plan:
+  - get: concourse-demo-app-master 
+    trigger: true
+    passed:
+      - unit
+  - task: compile
+    file: concourse-demo-app-master/ci/compile.yml
 - name: deploy
   serial: true
   plan:
   - get: concourse-demo-app-master
     trigger: true
     passed:
-      - unit
+      - compile
   - put: staging
     params:
       manifest: concourse-demo-app-master/manifests/staging.yml
