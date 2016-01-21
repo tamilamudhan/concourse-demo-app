@@ -8,7 +8,5 @@ export PATH=$GOPATH/bin:$PATH
 go get github.com/tools/godep
 source_dir="$(cd "$(dirname "$0")" && pwd)"
 cd $source_dir/..
+cd cmd/concourse-demo-app
 godep go build .
-mkdir build-artifact
-mv concourse-demo-app build-artifact
-ls -lha build-artifact

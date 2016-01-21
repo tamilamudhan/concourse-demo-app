@@ -43,7 +43,7 @@ jobs:
     trigger: true
   - task: unit
     file: concourse-demo-app-master/ci/unit.yml
-- name: compile 
+- name: compile-smoke 
   serial: true
   public: true
   plan:
