@@ -1,4 +1,4 @@
 ---
 name: demo-app-prod 
 buildpack: http://github.com/ryandotsmith/null-buildpack.git
-command: ./main
+command: ./concourse-demo-app
