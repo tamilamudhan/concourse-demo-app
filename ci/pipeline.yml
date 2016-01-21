@@ -1,4 +1,13 @@
-groups: []
+groups: 
+- name: delivery
+  jobs:
+  - unit-tests
+  - compile-smoke
+  - deploy-stage
+- name: deployment
+  jobs:
+  - load-test
+  - shipit
 
 resources:
 - name: concourse-demo-app-master
@@ -77,6 +86,7 @@ jobs:
 - name: shipit
   plan:
   - get: concourse-demo-app-master
+    trigger: true
     passed:
       - load-test
   - put: production
