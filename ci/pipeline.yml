@@ -35,13 +35,13 @@ resources:
     space: demo-production
 
 jobs:
-- name: unit
+- name: unit-tests
   serial: true
   public: true
   plan:
   - get: concourse-demo-app-master 
     trigger: true
-  - task: unit
+  - task: unit-tests
     file: concourse-demo-app-master/ci/unit.yml
 - name: compile-smoke 
   serial: true
@@ -50,7 +50,7 @@ jobs:
   - get: concourse-demo-app-master 
     trigger: true
     passed:
-      - unit
+      - unit-tests
   - task: compile-smoke
     file: concourse-demo-app-master/ci/compile.yml
 - name: deploy
