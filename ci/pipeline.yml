@@ -73,6 +73,7 @@ jobs:
         "ORG": pivot-jcalabrese
         "SPACE": demo-staging
         "API": https://api.run.pez.pivotal.io
+        "APPNAME": demo-app-stage
 - name: shipit
   plan:
   - get: concourse-demo-app-master
