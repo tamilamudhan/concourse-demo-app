@@ -12,4 +12,4 @@ yes | ./cf install-plugin pipeline/output/builds/linux64/cf-app-attack
 env
 
 ./cf login -o $ORG -s $SPACE -u $CFUSER -p $CFPASS -a $API
-echo "GET https://{{.AppHost}}" | ./cf bench $APPNAME attack -duration=5s -insecure | cf bench somecoolapp report -reporter="text"
+echo "GET https://{{.AppHost}}" | ./cf bench $APPNAME attack -duration=5s -insecure | ./cf bench $APPNAME report -reporter="text"
