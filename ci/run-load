@@ -5,11 +5,12 @@ set -xe
 export GOPATH=$PWD/go
 export PATH=$GOPATH/bin:$PATH
 
-#curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar -zx
-#wget https://github.com/xchapter7x/cf-app-attack/releases/download/v1.1.3/cf-app-attack.tgz
-#tar -xvzf cf-app-attack.tgz
-#yes | ./cf install-plugin pipeline/output/builds/linux64/cf-app-attack
-env
+curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar -zx
+wget https://github.com/xchapter7x/cf-app-attack/releases/download/v1.1.3/cf-app-attack.tgz
+tar -xvzf cf-app-attack.tgz
+yes | ./cf install-plugin pipeline/output/builds/linux64/cf-app-attack
 echo $CFUSER
 echo $CFPASS
+
+./cf login -o $ORG -s $SPACE -u $CFUSER -p $CFPASS -a $API
 ./cf bench demo-app-stage

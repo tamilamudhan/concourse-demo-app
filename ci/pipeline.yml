@@ -70,6 +70,9 @@ jobs:
       params: 
         "CFUSER": {{deploy-username}}
         "CFPASS": {{deploy-password}}
+        "ORG": pivot-jcalabrese
+        "SPACE": demo-staging
+        "API": https://api.run.pez.pivotal.io
 - name: shipit
   plan:
   - get: concourse-demo-app-master
