@@ -1,3 +1,3 @@
 ---
-name: demo-app-prod 
+name: demo-app-prod-Tamil
 buildpack: https://github.com/cloudfoundry/go-buildpack.git
